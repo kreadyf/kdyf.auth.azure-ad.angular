@@ -27,7 +27,7 @@ export const AuthenticationFailure = createAction(
   props<{ validation: string }>()
 );
 
-export const Logout = createAction('[AUTH]Logout');
+export const Logout = createAction('[AUTHAzureAd]Logout');
 export const Authorize = createAction('[AUTH]Authorize', props<{ authToken: string }>());
 export const LoginRedirect = createAction('[AUTH]LoginRedirect', props<{ urlRedirect: string }>());
 export const RefreshToken = createAction('[AUTH]RefreshToken', props<AuthenticateByRefreshToken>());

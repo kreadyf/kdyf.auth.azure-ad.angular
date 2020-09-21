@@ -18,7 +18,7 @@ export class AuthHttpInterceptor implements HttpInterceptor {
   isRefreshingToken = false;
   heartbeatSubs = new BehaviorSubject(null);
 
-  constructor(private authService: AuthService,
+  constructor(private authService: AuthAzureAdService,
               private store: Store<any>,
               private actions: ActionsSubject) {
 
