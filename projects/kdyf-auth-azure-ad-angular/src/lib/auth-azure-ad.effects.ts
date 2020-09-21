@@ -6,7 +6,7 @@ import {of} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {exhaustMap, map, catchError, withLatestFrom} from 'rxjs/operators';
 // NGRX
-import * as authActions from './auth.actions';
+import * as authActions from './auth-azure-ad.actions';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 // SERVICES
 import {AuthService} from './services/auth.service';
@@ -15,7 +15,7 @@ import {AuthenticateByLogin, AuthenticateBySamlToken} from './models/auth.models
 import {GrantType} from './models/auth.grant-type.enum';
 
 @Injectable()
-export class AuthEffects {
+export class AuthAzureAdEffects {
 
   constructor(private router: Router,
               private store: Store<any>,

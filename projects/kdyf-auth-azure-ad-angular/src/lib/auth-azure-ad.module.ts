@@ -3,11 +3,11 @@ import {CommonModule} from '@angular/common';
 import {NgModule, ModuleWithProviders} from '@angular/core';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 // NGRX
-import {reducer} from './auth.reducer';
+import {reducer} from './auth-azure-ad.reducer';
 import {StoreModule} from '@ngrx/store';
-import {AuthEffects} from './auth.effects';
+import {AuthEffects} from './auth-azure-ad.effects';
 import {EffectsModule} from '@ngrx/effects';
-import {metaReducers} from './auth.meta-reducer';
+import {metaReducers} from './auth-azure-ad.meta-reducer';
 // SERVICES
 import {AuthService} from './services/auth.service';
 import {AuthGuard} from './services/auth-guard.service';
@@ -25,7 +25,7 @@ export const effectsModule = EffectsModule.forFeature([AuthEffects]);
   ]
 })
 
-export class AuthModule {
+export class AuthAzureAdModule {
   static forRoot(config: AuthConfig): ModuleWithProviders<any> {
     return {
       ngModule: RootAuthModule,
@@ -48,11 +48,11 @@ export class AuthModule {
 
 @NgModule({
   imports: [
-    AuthModule,
+    AuthAzureAdModule,
     storeModule,
     effectsModule
   ]
 })
 
-export class RootAuthModule {
+export class RootAuthAzureAdModule {
 }

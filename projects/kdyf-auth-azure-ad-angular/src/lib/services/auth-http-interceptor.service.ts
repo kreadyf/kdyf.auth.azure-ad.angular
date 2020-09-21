@@ -8,7 +8,7 @@ import {catchError, finalize, withLatestFrom, exhaustMap, switchMap, tap} from '
 // NGRX
 import {ofType} from '@ngrx/effects';
 import {Store, ActionsSubject} from '@ngrx/store';
-import * as authActions from '../auth.actions';
+import * as authActions from '../auth-azure-ad.actions';
 // SERVICES
 import {AuthService} from './auth.service';
 

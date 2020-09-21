@@ -1,5 +1,5 @@
 {
-  "name": "library",
+  "name": "@kreadyf/auth-azure-ad-angular",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build-prod": "ng build --prod auth-azure-ad-angular"
+    "build-prod": "ng build --prod kdyf-auth-azure-ad-angular"
   },
   "private": true,
   "dependencies": {
