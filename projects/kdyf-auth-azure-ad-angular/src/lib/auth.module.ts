@@ -15,6 +15,9 @@ import {AuthInterceptor} from './services/auth.interceptor';
 // OTHERS
 import {AuthConfig} from './models/auth-config.model';
 
+export const storeModule = StoreModule.forFeature('auth', reducer, {metaReducers});
+export const effectsModule = EffectsModule.forFeature([AuthEffects]);
+
 @NgModule({
   imports: [
     CommonModule,
@@ -46,8 +49,8 @@ export class AuthModule {
 @NgModule({
   imports: [
     AuthModule,
-    StoreModule.forFeature('auth', reducer, {metaReducers}),
-    EffectsModule.forFeature([AuthEffects]),
+    storeModule,
+    effectsModule
   ],
 })
 
