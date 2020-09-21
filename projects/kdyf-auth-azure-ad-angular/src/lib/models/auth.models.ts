@@ -1,4 +1,6 @@
 export interface User {
+  username: string;
+  tenant: string;
   displayName: string;
   policies?: string[];
 }

@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../dist/auth-azure-ad-angular",
+  "dest": "../../dist/kdyf-auth-azure-ad-angular",
   "lib": {
     "entryFile": "src/public-api.ts"
   }

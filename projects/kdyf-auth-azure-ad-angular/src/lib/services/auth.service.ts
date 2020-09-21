@@ -1,17 +1,22 @@
+// ANGULAR
 import {Injectable, Inject} from '@angular/core';
-import {Store} from '@ngrx/store';
-import {Observable, of, throwError} from 'rxjs';
-import {map, catchError} from 'rxjs/operators';
 import {HttpClient, HttpParams, HttpHeaders, HttpParameterCodec} from '@angular/common/http';
+// RXJS
+import {map, catchError} from 'rxjs/operators';
+import {Observable, of, throwError} from 'rxjs';
+// NGRX
+import {Store} from '@ngrx/store';
+// MODULES
+import {JwtHelperService} from '@auth0/angular-jwt';
+// OTHERS
 import {
-  AuthenticateResponse,
   User,
+  AuthenticateResponse,
   AuthenticateByRefreshToken,
   AuthenticateByAzureAdToken
 } from '../models/auth.models';
-import {JwtHelperService} from '@auth0/angular-jwt';
-import {GrantType} from '../models/auth.grant-type.enum';
 import {AuthConfig} from '../models/auth-config.model';
+import {GrantType} from '../models/auth-grant-type.enum';
 
 const jwtHelper = new JwtHelperService();
 const FORM_ENCODED_HTTP_HEADERS: HttpHeaders = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
@@ -40,6 +45,10 @@ export class AuthService {
   constructor(private http: HttpClient, @Inject('authConfig') private config: AuthConfig, private store: Store<any>) {
   }
 
+  initSaml(): void {
+    document.location.href = `${this.config.loginHost}${this.config.samlInitUrl}`;
+  }
+
   initAzureAd(): void {
     document.location.href = `${this.config.urlCode}response_type=${this.config.response_type}&state=${this.config.state}&client_id=${this.config.azureAdClientId}&redirect_uri=${this.config.azureAdRedirectUri}&scope=${this.config.scope}&prompt=select_account`;
   }
@@ -49,15 +58,13 @@ export class AuthService {
     let body = new HttpParams({encoder: new CustomQueryEncoderHelper()});
     let loginHost = `${this.config.loginHost}/connect/token`;
 
-    }if (grantType == GrantType.AZUREAD) {
-      let azureAdCredentials = <AuthenticateByAzureAdToken>credentials;
-      body = body
-        .set('client_id', this.config.azureAdClientId)
-        .set('client_secret', this.config.azureAdClientSecret)
-        .set('grant_type', this.config.azureAdGrantType)
-        .set('redirect_uri', this.config.azureAdRedirectUri)
-        .set('code', azureAdCredentials.code);
-    }
+    let azureAdCredentials = <AuthenticateByAzureAdToken>credentials;
+    body = body
+      .set('client_id', this.config.azureAdClientId)
+      .set('client_secret', this.config.azureAdClientSecret)
+      .set('grant_type', this.config.azureAdGrantType)
+      .set('redirect_uri', this.config.azureAdRedirectUri)
+      .set('code', azureAdCredentials.code);
 
     return this.http.post(`${this.config.loginHost}${this.config.azureAdTenantId}`, body, {headers: FORM_ENCODED_HTTP_HEADERS})
       .pipe<{ user: User, authenticate: AuthenticateResponse }>(
@@ -74,12 +81,10 @@ export class AuthService {
     if (!refreshToken || !refreshToken.refreshToken)
       return Observable.throw({user: null, authenticate: null});
 
-
     const body = new HttpParams()
       .set('client_id', this.config.azureAdClientId)
       .set('client_secret', this.config.azureAdClientSecret)
       .set('grant_type', 'refresh_token')
-      // .set('resource', config.resource)
       .set('refresh_token', refreshToken.refreshToken)
       .set('scope', this.config.scope);
 

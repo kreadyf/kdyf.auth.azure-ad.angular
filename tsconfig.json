@@ -16,9 +16,9 @@
       "dom"
     ],
     "paths": {
-      "auth-azure-ad-angular": [
-        "dist/auth-azure-ad-angular/auth-azure-ad-angular",
-        "dist/auth-azure-ad-angular"
+      "kdyf-auth-azure-ad-angular": [
+        "dist/kdyf-auth-azure-ad-angular/kdyf-auth-azure-ad-angular",
+        "dist/kdyf-auth-azure-ad-angular"
       ]
     }
   }

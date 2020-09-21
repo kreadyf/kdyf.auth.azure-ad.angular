@@ -8,17 +8,17 @@ import {catchError, finalize, withLatestFrom, exhaustMap, switchMap, tap} from '
 // NGRX
 import {ofType} from '@ngrx/effects';
 import {Store, ActionsSubject} from '@ngrx/store';
-import * as authActions from '../auth-azure-ad.actions';
+import * as authActions from '../auth.actions';
 // SERVICES
 import {AuthService} from './auth.service';
 
 @Injectable()
-export class AuthHttpInterceptor implements HttpInterceptor {
+export class AuthInterceptor implements HttpInterceptor {
 
   isRefreshingToken = false;
   heartbeatSubs = new BehaviorSubject(null);
 
-  constructor(private authService: AuthAzureAdService,
+  constructor(private authService: AuthService,
               private store: Store<any>,
               private actions: ActionsSubject) {
 

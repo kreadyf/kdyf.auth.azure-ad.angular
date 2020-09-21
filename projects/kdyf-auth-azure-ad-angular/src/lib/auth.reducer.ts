@@ -1,5 +1,5 @@
 // NGRX
-import * as authActions from './auth-azure-ad.actions';
+import * as authActions from './auth.actions';
 import {Action, createReducer, on} from '@ngrx/store';
 // OTHERS
 import {User, AuthenticateResponse} from './models/auth.models';

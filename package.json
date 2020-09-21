@@ -1,5 +1,5 @@
 {
-  "name": "@kreadyf/auth-azure-ad-angular",
+  "name": "library",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
