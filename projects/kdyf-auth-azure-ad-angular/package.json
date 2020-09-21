@@ -2,8 +2,8 @@
   "name": "@kreadyf/auth-azure-ad-angular",
   "version": "3.0.0",
   "peerDependencies": {
-    "@angular/common": "^10.1.2",
-    "@angular/core": "^10.1.2",
+    "@angular/common": "^10.0.0",
+    "@angular/core": "^10.0.0",
 
     "@ngrx/store": "^10.0.0",
     "@ngrx/effects": "^10.0.0",
