@@ -35,12 +35,6 @@ const featureReducer = createReducer(
     pending: true,
     error: undefined
   })),
-  on(authActions.SamlInitLogin, (state, {keepLoggedIn}) => ({
-    ...state,
-    keepLoggedIn: keepLoggedIn,
-    pending: true,
-    error: undefined
-  })),
   on(authActions.AzureAdInitLogin, (state, {keepLoggedIn}) => ({
     ...state,
     keepLoggedIn: keepLoggedIn,

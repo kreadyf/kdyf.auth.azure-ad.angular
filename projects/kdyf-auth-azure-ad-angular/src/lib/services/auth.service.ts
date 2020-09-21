@@ -5,10 +5,8 @@ import {map, catchError} from 'rxjs/operators';
 import {HttpClient, HttpParams, HttpHeaders, HttpParameterCodec} from '@angular/common/http';
 import {
   AuthenticateResponse,
-  AuthenticateByLogin,
   User,
   AuthenticateByRefreshToken,
-  AuthenticateBySamlToken,
   AuthenticateByAzureAdToken
 } from '../models/auth.models';
 import {JwtHelperService} from '@auth0/angular-jwt';
@@ -42,37 +40,16 @@ export class AuthService {
   constructor(private http: HttpClient, @Inject('authConfig') private config: AuthConfig, private store: Store<any>) {
   }
 
-  initSaml(): void {
-    document.location.href = `${this.config.loginHost}${this.config.samlInitUrl}`;
-  }
-
   initAzureAd(): void {
     document.location.href = `${this.config.urlCode}response_type=${this.config.response_type}&state=${this.config.state}&client_id=${this.config.azureAdClientId}&redirect_uri=${this.config.azureAdRedirectUri}&scope=${this.config.scope}&prompt=select_account`;
   }
 
-  login(grantType: GrantType, credentials: AuthenticateByLogin | AuthenticateBySamlToken | AuthenticateByAzureAdToken): Observable<{ user: User, authenticate: AuthenticateResponse }> {
+  login(grantType: GrantType, credentials: AuthenticateByAzureAdToken): Observable<{ user: User, authenticate: AuthenticateResponse }> {
 
     let body = new HttpParams({encoder: new CustomQueryEncoderHelper()});
     let loginHost = `${this.config.loginHost}/connect/token`;
 
-    if (grantType == GrantType.PASSWORD) {
-      let passwordCredentials = <AuthenticateByLogin>credentials;
-      body = body
-        .set('client_id', this.config.clientId)
-        .set('client_secret', this.config.clientSecret)
-        .set('grant_type', 'password')
-        .set('username', passwordCredentials.username)
-        .set('password', passwordCredentials.password)
-        .set('acr_values', `tenant:${passwordCredentials.tenant} authtype:${this.config.authType}`);
-    } else if (grantType == GrantType.SAML) {
-      let samlCredentials = <AuthenticateBySamlToken>credentials;
-      body = body;
-      body = body
-        .set('client_id', this.config.clientId)
-        .set('client_secret', this.config.clientSecret)
-        .set('grant_type', 'saml')
-        .set('SAMLResponse', samlCredentials.samlToken);
-    } else if (grantType == GrantType.AZUREAD) {
+    }if (grantType == GrantType.AZUREAD) {
       let azureAdCredentials = <AuthenticateByAzureAdToken>credentials;
       body = body
         .set('client_id', this.config.azureAdClientId)

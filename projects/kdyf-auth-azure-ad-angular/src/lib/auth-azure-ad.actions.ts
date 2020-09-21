@@ -1,9 +1,7 @@
 import {createAction, props} from '@ngrx/store';
 import {
   User,
-  AuthenticateByLogin,
   AuthenticateResponse,
-  AuthenticateBySamlToken,
   AuthenticateByAzureAdToken,
   AuthenticateByRefreshToken
 } from './models/auth.models';
@@ -13,7 +11,7 @@ export const Login = createAction(
   '[AUTH]Login',
   props<{
     grantType: GrantType,
-    credentials: AuthenticateByLogin | AuthenticateBySamlToken | AuthenticateByAzureAdToken,
+    credentials: AuthenticateByAzureAdToken,
     keepLoggedIn: boolean
   }>()
 );
@@ -28,15 +26,14 @@ export const AuthenticationFailure = createAction(
 );
 
 export const Logout = createAction('[AUTHAzureAd]Logout');
-export const Authorize = createAction('[AUTH]Authorize', props<{ authToken: string }>());
-export const LoginRedirect = createAction('[AUTH]LoginRedirect', props<{ urlRedirect: string }>());
-export const RefreshToken = createAction('[AUTH]RefreshToken', props<AuthenticateByRefreshToken>());
+export const Authorize = createAction('[AUTHAzureAd]Authorize', props<{ authToken: string }>());
+export const LoginRedirect = createAction('[AUTHAzureAd]LoginRedirect', props<{ urlRedirect: string }>());
+export const RefreshToken = createAction('[AUTHAzure]RefreshToken', props<AuthenticateByRefreshToken>());
 
-export const AuthorizationSuccess = createAction('[AUTH]AuthorizationSuccess', props<{ policies: string[] }>());
-export const AuthorizationFailure = createAction('[AUTH]AuthorizationFailure', props<{ error: string }>());
+export const AuthorizationSuccess = createAction('[AUTHAzureAd]AuthorizationSuccess', props<{ policies: string[] }>());
+export const AuthorizationFailure = createAction('[AUTHAzureAd]AuthorizationFailure', props<{ error: string }>());
 
-export const RequestAuthenticationFailure = createAction('[AUTH]RequestAuthenticationFailure');
-export const RequestAuthorizationFailure = createAction('[AUTH]RequestAuthorizationFailure');
+export const RequestAuthenticationFailure = createAction('[AUTHAzureAd]RequestAuthenticationFailure');
+export const RequestAuthorizationFailure = createAction('[AUTHAzureAd]RequestAuthorizationFailure');
 
-export const SamlInitLogin = createAction('[AUTH]SamlInitLogin', props<{ keepLoggedIn: boolean }>());
 export const AzureAdInitLogin = createAction('[Auth]AzureAdInitLogin', props<{ keepLoggedIn: boolean }>());

@@ -11,7 +11,7 @@ import {Actions, createEffect, ofType} from '@ngrx/effects';
 // SERVICES
 import {AuthService} from './services/auth.service';
 // OTHERS
-import {AuthenticateByLogin, AuthenticateBySamlToken} from './models/auth.models';
+import {AuthenticateByLogin} from './models/auth.models';
 import {GrantType} from './models/auth.grant-type.enum';
 
 @Injectable()
@@ -20,7 +20,7 @@ export class AuthAzureAdEffects {
   constructor(private router: Router,
               private store: Store<any>,
               private actions$: Actions,
-              private service: AuthService) {
+              private service: AuthAzureAdService) {
   }
 
   logout$ = createEffect(() => this.actions$.pipe(
@@ -41,7 +41,7 @@ export class AuthAzureAdEffects {
     map((action: any) => action),
     exhaustMap((param: {
       grantType: GrantType,
-      credentials: AuthenticateByLogin | AuthenticateBySamlToken,
+      credentials: AuthenticateByLogin,
       keepLoggedIn: boolean
     }) => this.service.login(param.grantType, param.credentials).pipe(
       map(success => authActions.AuthenticationSuccess(success)),
@@ -87,13 +87,6 @@ export class AuthAzureAdEffects {
         catchError(error => of(authActions.AuthenticationFailure(error)))
       ))
     )
-  );
-
-  samlInitLogin$ = createEffect(() => this.actions$.pipe(
-    ofType(authActions.SamlInitLogin.type),
-    exhaustMap((action: any) => of(this.service.initSaml()))
-    )
-    , {dispatch: false}
   );
 
   azureAdInitLogin$ = createEffect(() => this.actions$.pipe(
