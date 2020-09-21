@@ -20,17 +20,9 @@ export class AuthConfig {
 
   session: boolean;
 
-  // if you need to check multiple api's for policies and if the UI is authorized to access them
-  // url: string of the policy endpoint
-  // required: when true, one 401/403 from the policy endpoint will logout the user
-  /*authorization: {
-    url: string;
-    required: boolean;
-  } []*/
-  // removed array as server side config in azure does not support arrays (yet)
   authorization: {
     url: string;
     required: boolean;
-  }
+  };
 
 }

@@ -1,12 +1,12 @@
 // ANGULAR
 import {Injectable} from '@angular/core';
-import {CanActivate,} from '@angular/router';
+import {CanActivate} from '@angular/router';
 // RXJS
 import {Observable} from 'rxjs';
 import {map, take} from 'rxjs/operators';
 // NGRX
 import {Store, select} from '@ngrx/store';
-import * as authActions from '../auth-azure-ad.actions';
+import * as authActions from '../auth.actions';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

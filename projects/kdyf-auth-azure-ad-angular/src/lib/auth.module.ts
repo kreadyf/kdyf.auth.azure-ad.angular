@@ -3,20 +3,17 @@ import {CommonModule} from '@angular/common';
 import {NgModule, ModuleWithProviders} from '@angular/core';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 // NGRX
-import {reducer} from './auth-azure-ad.reducer';
+import {reducer} from './auth.reducer';
 import {StoreModule} from '@ngrx/store';
-import {AuthEffects} from './auth-azure-ad.effects';
+import {AuthEffects} from './auth.effects';
 import {EffectsModule} from '@ngrx/effects';
-import {metaReducers} from './auth-azure-ad.meta-reducer';
+import {metaReducers} from './auth.meta-reducer';
 // SERVICES
+import {AuthGuard} from './services/auth.guard';
 import {AuthService} from './services/auth.service';
-import {AuthGuard} from './services/auth-guard.service';
-import {AuthHttpInterceptor} from './services/auth-http-interceptor.service';
+import {AuthInterceptor} from './services/auth.interceptor';
 // OTHERS
 import {AuthConfig} from './models/auth-config.model';
-
-export const storeModule = StoreModule.forFeature('auth', reducer, {metaReducers});
-export const effectsModule = EffectsModule.forFeature([AuthEffects]);
 
 @NgModule({
   imports: [
@@ -25,7 +22,7 @@ export const effectsModule = EffectsModule.forFeature([AuthEffects]);
   ]
 })
 
-export class AuthAzureAdModule {
+export class AuthModule {
   static forRoot(config: AuthConfig): ModuleWithProviders<any> {
     return {
       ngModule: RootAuthModule,
@@ -38,7 +35,7 @@ export class AuthAzureAdModule {
         },
         {
           provide: HTTP_INTERCEPTORS,
-          useClass: AuthHttpInterceptor,
+          useClass: AuthInterceptor,
           multi: true
         }
       ]
@@ -48,11 +45,11 @@ export class AuthAzureAdModule {
 
 @NgModule({
   imports: [
-    AuthAzureAdModule,
-    storeModule,
-    effectsModule
-  ]
+    AuthModule,
+    StoreModule.forFeature('auth', reducer, {metaReducers}),
+    EffectsModule.forFeature([AuthEffects]),
+  ],
 })
 
-export class RootAuthAzureAdModule {
+export class RootAuthModule {
 }
