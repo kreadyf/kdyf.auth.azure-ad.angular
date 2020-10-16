@@ -10,10 +10,7 @@ import {
 
 export const Login = createAction(
   '[AuthAzureAd]Login',
-  props<{
-    credentials: AuthenticateByAzureAdToken,
-    keepLoggedIn: boolean
-  }>()
+  props<{ credentials: AuthenticateByAzureAdToken, keepLoggedIn: boolean }>()
 );
 
 export const AuthenticationSuccess = createAction(
