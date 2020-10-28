@@ -66,7 +66,7 @@ export class AuthInterceptor implements HttpInterceptor {
       ofType(authActions.AuthenticationSuccess.type, authActions.AuthenticationFailure.type),
       withLatestFrom(this.store),
       exhaustMap(([action, storeState]) => {
-
+        this.isRefreshingToken = false;
         if ((<any>action).type === authActions.AuthenticationSuccess.type) {
           return next.handle(this.addToken(req));
         } else {
