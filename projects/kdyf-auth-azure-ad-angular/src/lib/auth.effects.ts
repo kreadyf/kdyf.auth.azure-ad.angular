@@ -37,7 +37,11 @@ export class AuthEffects {
   );
 
   logout$ = createEffect(() => this.actions$.pipe(
-    ofType(authActions.Logout.type),
+    ofType(
+      authActions.Logout.type,
+      authActions.AuthenticationFailure.type,
+      authActions.AuthorizationFailure.type
+    ),
     withLatestFrom(this.store),
     map(([action, storeState]) => authActions.LoginRedirect({
       urlRedirect: this.router.url !== '/auth/login' ? this.router.url : storeState.auth.urlRedirect
